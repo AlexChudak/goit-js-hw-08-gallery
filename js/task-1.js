@@ -1,5 +1,11 @@
 import defaultRef from './gallery-items.js';
 
+const openModalWindow = document.querySelector('.js-lightbox');
+const closeModalWindow = document.querySelector(
+  'button[data-action ="close-lightbox"]',
+);
+const lightBoxImageRef = document.querySelector('.lightbox__content');
+
 //Делаем функцию c коснтурктором разметки==================
 const makeLiImage = value => {
   //Создаю разметку================
@@ -26,6 +32,29 @@ const makeLiImage = value => {
 const divRef = document.querySelector('ul');
 //Проходим по массиву объектов мапОм и создаем разметку для каждого объекта
 const imageList = defaultRef.map(value => makeLiImage(value));
-console.log(imageList);
+//console.log(imageList);
 //Добавляю в ДОМ=============
 divRef.append(...imageList);
+
+//вешаем слушателя
+divRef.addEventListener('click', onGalleryClick);
+function onGalleryClick(event) {
+  //event.preventDefault();прекращаем Дефолтное поведение
+  event.preventDefault();
+
+  if (event.target.nodeName !== 'IMG') {
+    return;
+  }
+  //Откытие модалки
+  openModalWindow.classList.add('is-open');
+  //Подмена src в модалке
+
+  lightBoxImageRef.innerHTML = `<img class="lightbox__image" src='${event.target.dataset.source}' alt="" />`;
+}
+
+//Закрытие модалки
+closeModalWindow.addEventListener('click', handleCloseButton);
+function handleCloseButton() {
+  openModalWindow.classList.remove('is-open');
+}
+//Очистка фото после закрытия

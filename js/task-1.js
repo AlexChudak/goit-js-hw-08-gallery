@@ -55,6 +55,7 @@ function onGalleryClick(event) {
 //Закрытие модалки
 closeModalWindow.addEventListener('click', handleCloseButton);
 function handleCloseButton() {
+  //Очистка фото после закрытия
+  lightBoxImageRef.innerHTML = `<img class="lightbox__image" src='' alt="" />`;
   openModalWindow.classList.remove('is-open');
 }
-//Очистка фото после закрытия
